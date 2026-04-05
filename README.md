@@ -24,6 +24,10 @@ The web component source code lives in a separate repo:
 - **CDN:** `https://cdn.jsdelivr.net/gh/RoncoJhon/shaka-hls-dash-player/shaka-hls-dash-player.js`
 - **Docs:** See the README in the main repo for full API reference
 
+## About
+
+Built by [RoncoDev](https://roncodev.com). This player ships with [DASH/HLS Packager](https://roncodev.com) — a desktop app that converts any video into multi-resolution HLS & DASH. See it on the [product demo page](https://roncodev.com/demo).
+
 ## License
 
 MIT
