@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>shaka-hls-dash-player — Free HLS &amp; DASH Video Player</title>
+    <meta name="description" content="Free, production-ready web component for HLS and DASH streaming. Drop one script tag into your site. Quality selector, subtitles, seek thumbnails, auto format detection. Zero build step.">
+    <meta name="keywords" content="HLS video player, DASH video player, embeddable video player, self-hosted video player, Shaka player, adaptive streaming, free video player, web component, m3u8 player, mpd player">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="shaka-hls-dash-player — Free HLS & DASH Video Player">
+    <meta property="og:description" content="Drop one script tag into your site. Quality selector, subtitles, seek thumbnails, auto device detection. Zero build step, zero dependencies.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://roncojhon.github.io/shaka-hls-dash-player-demo/">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="shaka-hls-dash-player — Free HLS & DASH Video Player">
+    <meta name="twitter:description" content="Production-ready embeddable player for HLS & DASH. Zero build step, zero npm install.">
+
+    <link rel="canonical" href="https://roncojhon.github.io/shaka-hls-dash-player-demo/">
+
+    <!-- Load the web component from the main repo via jsDelivr -->
+    <script src="https://cdn.jsdelivr.net/gh/RoncoJhon/shaka-hls-dash-player/shaka-hls-dash-player.js"></script>
+
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #0f172a;
+            color: #e2e8f0;
+            min-height: 100vh;
+        }
+
+        /* ===== Hero ===== */
+        .hero {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 3rem 1.5rem 2rem;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 2.25rem;
+            font-weight: 800;
+            line-height: 1.2;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #34d399, #06b6d4, #818cf8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .tagline {
+            font-size: 1.15rem;
+            color: #94a3b8;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+            max-width: 620px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* ===== Quick Start Code ===== */
+        .quick-start {
+            max-width: 700px;
+            margin: 0 auto 2.5rem;
+            padding: 0 1.5rem;
+        }
+
+        .quick-start pre {
+            background: #1e293b;
+            border: 1px solid #334155;
+            border-radius: 0.75rem;
+            padding: 1.25rem 1.5rem;
+            overflow-x: auto;
+            font-size: 0.85rem;
+            color: #a5b4fc;
+            line-height: 1.7;
+        }
+
+        .comment { color: #64748b; }
+        .tag { color: #6ee7b7; }
+        .attr { color: #93c5fd; }
+        .val { color: #fde68a; }
+
+        /* ===== Features ===== */
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1rem;
+            max-width: 800px;
+            margin: 0 auto 2.5rem;
+            padding: 0 1.5rem;
+        }
+
+        .feature {
+            background: #1e293b;
+            border: 1px solid #334155;
+            border-radius: 0.75rem;
+            padding: 1.25rem;
+            text-align: left;
+        }
+
+        .feature h3 {
+            font-size: 0.95rem;
+            font-weight: 600;
+            margin-bottom: 0.4rem;
+            color: #e2e8f0;
+        }
+
+        .feature p {
+            font-size: 0.85rem;
+            color: #94a3b8;
+            line-height: 1.5;
+        }
+
+        /* ===== Demo Section ===== */
+        .demo-section {
+            max-width: 960px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        .demo-label {
+            text-align: center;
+            font-size: 0.85rem;
+            color: #64748b;
+            margin-bottom: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            font-weight: 600;
+        }
+
+        .demo-frame {
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            border: 1px solid #334155;
+            border-radius: 0.75rem;
+            overflow: hidden;
+            background: #000;
+        }
+
+        /* ===== How It Works ===== */
+        .how-it-works {
+            max-width: 800px;
+            margin: 3rem auto;
+            padding: 0 1.5rem;
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.25rem;
+        }
+
+        .step {
+            text-align: center;
+            padding: 1.25rem;
+        }
+
+        .step-number {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 2.5rem;
+            height: 2.5rem;
+            border-radius: 50%;
+            background: #6366f1;
+            color: #fff;
+            font-weight: 700;
+            font-size: 1.1rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .step h3 {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 0.4rem;
+        }
+
+        .step p {
+            font-size: 0.85rem;
+            color: #94a3b8;
+            line-height: 1.5;
+        }
+
+        /* ===== Embed Methods ===== */
+        .integration {
+            max-width: 800px;
+            margin: 3rem auto;
+            padding: 0 1.5rem;
+        }
+
+        .methods {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.25rem;
+        }
+
+        .method {
+            background: #1e293b;
+            border: 1px solid #334155;
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+        }
+
+        .method h3 {
+            font-size: 1.05rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .method p {
+            font-size: 0.9rem;
+            color: #94a3b8;
+            line-height: 1.6;
+            margin-bottom: 0.75rem;
+        }
+
+        .method pre {
+            background: #0f172a;
+            border: 1px solid #334155;
+            border-radius: 0.5rem;
+            padding: 1rem;
+            overflow-x: auto;
+            font-size: 0.8rem;
+            color: #a5b4fc;
+            line-height: 1.6;
+        }
+
+        /* ===== Keyboard Shortcuts ===== */
+        .shortcuts {
+            max-width: 500px;
+            margin: 2rem auto 3rem;
+            padding: 0 1.5rem;
+        }
+
+        .shortcuts table, .compat table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.9rem;
+        }
+
+        .shortcuts th, .shortcuts td, .compat th, .compat td {
+            padding: 0.6rem 1rem;
+            text-align: left;
+            border-bottom: 1px solid #1e293b;
+        }
+
+        .shortcuts th, .compat th {
+            color: #94a3b8;
+            font-weight: 600;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .shortcuts td, .compat td { color: #cbd5e1; }
+
+        kbd {
+            display: inline-block;
+            padding: 0.15rem 0.5rem;
+            font-size: 0.8rem;
+            background: #334155;
+            border: 1px solid #475569;
+            border-radius: 0.25rem;
+            font-family: inherit;
+            color: #e2e8f0;
+        }
+
+        /* ===== Browser Compatibility ===== */
+        .compat {
+            max-width: 700px;
+            margin: 2rem auto 3rem;
+            padding: 0 1.5rem;
+        }
+
+        /* ===== Folder Structure ===== */
+        .folder-section {
+            max-width: 700px;
+            margin: 0 auto 3rem;
+            padding: 0 1.5rem;
+        }
+
+        .folder-section > p {
+            color: #94a3b8;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            text-align: center;
+            margin-bottom: 1.25rem;
+        }
+
+        pre {
+            background: #1e293b;
+            border: 1px solid #334155;
+            border-radius: 0.75rem;
+            padding: 1.25rem 1.5rem;
+            overflow-x: auto;
+            font-size: 0.85rem;
+            color: #94a3b8;
+            line-height: 1.6;
+        }
+
+        /* ===== CTA ===== */
+        .cta {
+            text-align: center;
+            padding: 3rem 1.5rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .cta p {
+            color: #94a3b8;
+            font-size: 1rem;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 0.75rem 1.75rem;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            font-size: 0.95rem;
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+
+        .btn-primary {
+            background: #6366f1;
+            color: #fff;
+        }
+
+        .btn-primary:hover { background: #4f46e5; }
+
+        .btn-secondary {
+            background: transparent;
+            color: #e2e8f0;
+            border: 1px solid #475569;
+        }
+
+        .btn-secondary:hover {
+            border-color: #6366f1;
+            color: #a5b4fc;
+        }
+
+        /* ===== Footer ===== */
+        footer {
+            text-align: center;
+            padding: 2rem 1.5rem 3rem;
+            color: #64748b;
+            font-size: 0.85rem;
+            border-top: 1px solid #1e293b;
+            max-width: 600px;
+            margin: 2rem auto 0;
+        }
+
+        footer a {
+            color: #818cf8;
+            text-decoration: none;
+        }
+
+        footer a:hover { text-decoration: underline; }
+        footer p { margin-bottom: 0.5rem; line-height: 1.6; }
+
+        /* ===== Responsive ===== */
+        @media (max-width: 600px) {
+            h1 { font-size: 1.6rem; }
+            .hero { padding: 2rem 1rem 1.5rem; }
+            .features { grid-template-columns: 1fr; }
+            .methods { grid-template-columns: 1fr; }
+            .steps { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Hero -->
+    <section class="hero">
+        <h1>shaka-hls-dash-player</h1>
+        <p class="tagline">
+            A production-ready web component for HLS and DASH adaptive streaming. Drop one script tag into any website. Quality selector, subtitles, seek thumbnails, auto format detection. <strong>Zero build step. Zero npm install.</strong>
+        </p>
+    </section>
+
+    <!-- Quick Start -->
+    <section class="quick-start">
+        <pre><span class="comment">&lt;!-- Add to your HTML &mdash; that's it --&gt;</span>
+<span class="tag">&lt;script</span> <span class="attr">src</span>=<span class="val">"https://cdn.jsdelivr.net/gh/RoncoJhon/shaka-hls-dash-player/shaka-hls-dash-player.js"</span><span class="tag">&gt;&lt;/script&gt;</span>
+
+<span class="tag">&lt;shaka-hls-dash-player</span>
+  <span class="attr">base-url</span>=<span class="val">"https://cdn.example.com/my-video/"</span>
+<span class="tag">&gt;&lt;/shaka-hls-dash-player&gt;</span></pre>
+    </section>
+
+    <!-- Features -->
+    <section class="features">
+        <div class="feature">
+            <h3>Auto Device Detection</h3>
+            <p>HLS on Apple devices (native playback), DASH everywhere else (AV1 codec support via MSE).</p>
+        </div>
+        <div class="feature">
+            <h3>Quality Selector</h3>
+            <p>Adaptive bitrate by default with manual resolution override. Works with HLS quality levels and DASH representations.</p>
+        </div>
+        <div class="feature">
+            <h3>Subtitles</h3>
+            <p>WebVTT subtitles auto-discovered from the manifest. Toggle with the captions button or press C.</p>
+        </div>
+        <div class="feature">
+            <h3>Seek Thumbnails</h3>
+            <p>Hover the progress bar for thumbnail previews via VTT sprite sheets. Same experience as YouTube and Netflix.</p>
+        </div>
+        <div class="feature">
+            <h3>Web Component</h3>
+            <p>One script tag, one custom element. No framework required. Works in React, Vue, Svelte, plain HTML.</p>
+        </div>
+        <div class="feature">
+            <h3>DASH-to-HLS Fallback</h3>
+            <p>If DASH playback fails on a device, the player automatically retries with HLS. No viewer intervention needed.</p>
+        </div>
+    </section>
+
+    <!-- Live Demo -->
+    <section class="demo-section">
+        <p class="demo-label">Live Demo</p>
+        <div class="demo-frame">
+            <shaka-hls-dash-player base-url="https://cdn.roncodev.com/demo-video/"></shaka-hls-dash-player>
+        </div>
+    </section>
+
+    <!-- How It Works -->
+    <section class="how-it-works">
+        <h2 class="section-title">How It Works</h2>
+        <div class="steps">
+            <div class="step">
+                <div class="step-number">1</div>
+                <h3>Add the Script</h3>
+                <p>One script tag loads the web component. Shaka Player is fetched from CDN automatically.</p>
+            </div>
+            <div class="step">
+                <div class="step-number">2</div>
+                <h3>Point to Your Video</h3>
+                <p>Set <code>base-url</code> to your video folder. The component discovers manifests, subtitles, thumbnails, and poster automatically.</p>
+            </div>
+            <div class="step">
+                <div class="step-number">3</div>
+                <h3>Auto-Detect &amp; Play</h3>
+                <p>The player picks the best format for the device &mdash; HLS for Apple, DASH for everything else &mdash; and streams adaptively.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Embed Methods -->
+    <section class="integration">
+        <h2 class="section-title">Two Ways to Embed</h2>
+        <div class="methods">
+            <div class="method">
+                <h3>Web Component (Recommended)</h3>
+                <p>One script, one tag. The component loads all dependencies automatically from CDN.</p>
+                <pre>&lt;script src="https://cdn.jsdelivr.net/
+  gh/RoncoJhon/shaka-hls-dash-player
+  /shaka-hls-dash-player.js"&gt;&lt;/script&gt;
+
+&lt;shaka-hls-dash-player
+  base-url="/videos/my-video/"
+&gt;&lt;/shaka-hls-dash-player&gt;</pre>
+            </div>
+            <div class="method">
+                <h3>Self-Hosted</h3>
+                <p>Download <code>shaka-hls-dash-player.js</code> into your video folder and reference it locally. No CDN needed.</p>
+                <pre>your-video/
+  shaka-hls-dash-player.js
+  master.m3u8
+  manifest.mpd
+  720p/
+  1080p/
+  subtitles/
+  thumbnails/</pre>
+            </div>
+        </div>
+    </section>
+
+    <!-- Keyboard Shortcuts -->
+    <section class="shortcuts">
+        <h2 class="section-title">Keyboard Shortcuts</h2>
+        <table>
+            <thead>
+                <tr><th>Key</th><th>Action</th></tr>
+            </thead>
+            <tbody>
+                <tr><td><kbd>Space</kbd> / <kbd>K</kbd></td><td>Play / Pause</td></tr>
+                <tr><td><kbd>F</kbd></td><td>Toggle fullscreen</td></tr>
+                <tr><td><kbd>M</kbd></td><td>Mute / Unmute</td></tr>
+                <tr><td><kbd>&larr;</kbd> / <kbd>&rarr;</kbd></td><td>Seek &minus;5s / +5s</td></tr>
+                <tr><td><kbd>&uarr;</kbd> / <kbd>&darr;</kbd></td><td>Volume up / down</td></tr>
+                <tr><td><kbd>C</kbd></td><td>Toggle subtitles</td></tr>
+            </tbody>
+        </table>
+    </section>
+
+    <!-- Browser Compatibility -->
+    <section class="compat">
+        <h2 class="section-title">Browser Compatibility</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Browser</th>
+                    <th>Format</th>
+                    <th>AV1</th>
+                    <th>H.264</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td>Chrome 70+</td><td>DASH (Shaka + MSE)</td><td>Yes</td><td>Yes</td></tr>
+                <tr><td>Firefox 67+</td><td>DASH (Shaka + MSE)</td><td>Yes</td><td>Yes</td></tr>
+                <tr><td>Edge 79+</td><td>DASH (Shaka + MSE)</td><td>Yes</td><td>Yes</td></tr>
+                <tr><td>Safari 14+</td><td>HLS (native)</td><td>16.4+</td><td>Yes</td></tr>
+                <tr><td>iOS Safari</td><td>HLS (native)</td><td>17+</td><td>Yes</td></tr>
+            </tbody>
+        </table>
+    </section>
+
+    <!-- Folder Structure -->
+    <section class="folder-section">
+        <h2 class="section-title">Expected Folder Structure</h2>
+        <p>
+            The player auto-discovers all resources from the standard multi-resolution folder output. Only manifests are required &mdash; everything else is optional.
+        </p>
+        <pre>
+your-video/
+&#9500;&#9472;&#9472; master.m3u8           HLS master playlist
+&#9500;&#9472;&#9472; manifest.mpd          DASH manifest
+&#9500;&#9472;&#9472; 240p/
+&#9474;   &#9500;&#9472;&#9472; init.mp4
+&#9474;   &#9500;&#9472;&#9472; chunk_0.m4s
+&#9474;   &#9492;&#9472;&#9472; video.m3u8
+&#9500;&#9472;&#9472; 720p/ ...
+&#9500;&#9472;&#9472; 1080p/ ...
+&#9500;&#9472;&#9472; subtitles/
+&#9474;   &#9500;&#9472;&#9472; english.vtt
+&#9474;   &#9492;&#9472;&#9472; spanish.vtt
+&#9500;&#9472;&#9472; thumbnails/
+&#9474;   &#9500;&#9472;&#9472; thumb_0001.jpg
+&#9474;   &#9492;&#9472;&#9472; thumbnails.vtt
+&#9500;&#9472;&#9472; poster/
+&#9474;   &#9492;&#9472;&#9472; hd_image.jpg
+&#9492;&#9472;&#9472; preview/
+    &#9492;&#9472;&#9472; preview.mp4</pre>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta">
+        <h2 class="section-title">Generate This Folder Structure Automatically</h2>
+        <p>
+            DASH/HLS Packager converts any video into multi-resolution HLS &amp; DASH in one pass &mdash; with thumbnails, subtitles, dual manifests, and this player included.
+        </p>
+        <div class="cta-buttons">
+            <a href="https://roncodev.com/demo" class="btn btn-primary">See It In Action</a>
+            <a href="https://github.com/RoncoJhon/shaka-hls-dash-player" class="btn btn-secondary">View Source Code</a>
+        </div>
+    </section>
+
+    <footer>
+        <p>
+            Made by <a href="https://roncodev.com">RoncoDev</a>
+        </p>
+        <p>
+            <a href="https://github.com/RoncoJhon/shaka-hls-dash-player">Source Code</a> &middot;
+            <a href="https://github.com/RoncoJhon/shaka-hls-dash-player#attributes">Full API Docs</a> &middot;
+            <a href="https://roncodev.com/demo">Product Demo</a>
+        </p>
+    </footer>
+
+</body>
+</html>
