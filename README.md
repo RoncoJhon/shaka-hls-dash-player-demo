@@ -26,7 +26,7 @@ The web component source code lives in a separate repo:
 
 ## About
 
-Built by [RoncoDev](https://roncodev.com). This player ships with [DASH/HLS Packager](https://roncodev.com) — a desktop app that converts any video into multi-resolution HLS & DASH. See it on the [product demo page](https://roncodev.com/demo).
+This player ships with [DASH/HLS Packager](https://roncodev.com) — a desktop app that converts any video into multi-resolution HLS & DASH. See it on the [product demo page](https://roncodev.com/demo).
 
 ## License
 
